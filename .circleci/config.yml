@@ -16,6 +16,7 @@ jobs:
   build_debug:
     executor: android/android
     steps:
+      - checkout
       - clean
       - debug_build
 
