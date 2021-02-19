@@ -138,15 +138,7 @@ jobs:
       - release_build
       - release_test
 
-  release_apk_firebase:
-    executor: android/android
-    steps:
-      - checkout
-      - restore_caches
-      - release_assemble
-      - store_release_apk
-
-  release_apk_google_play:
+  generate_apk:
     executor: android/android
     steps:
       - checkout
@@ -188,7 +180,7 @@ workflows:
                 - /^release\/.*/
                 - master
 
-      - release_apk_firebase:
+      - generate_apk:
           requires:
             - build_test_release
             - build_test_debug
@@ -198,12 +190,4 @@ workflows:
               only:
                 - /^release\/.*/
                 - /^feature\/.*/
-
-      - release_apk_google_play:
-          requires:
-            - build_test_release
-
-          filters:
-            branches:
-              only:
                 - master
