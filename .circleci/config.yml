@@ -1,0 +1,26 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@0.2.1
+
+commands:
+  clean:
+    steps:
+      - run: ./gradlew clean
+
+  debug_build:
+    steps:
+      - run: ./gradlew buildDebug
+
+jobs:
+  build_debug:
+    executor: android/android
+    steps:
+      - clean
+      - debug_build
+
+workflows:
+  version: 1
+  android_workflow:
+    jobs:
+      - build_debug
