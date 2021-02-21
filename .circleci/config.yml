@@ -77,7 +77,11 @@ commands:
 
   debug_test:
     steps:
-      # TODO: Fix emulator for code coverage
+      # TODO: Fix emulator for code coverage:
+      # TODO: I found out the issue with circle ci and android emulators. Well, I'm only using the free version
+      # TODO: of circle ci and it provides only a medium size linux vm and it doesn't support virtualization. I noticed it
+      # TODO: when I tried the same script in a demo project in a paid circle ci account and tried the pipeline in a large and xlarge size vm
+      # TODO: and finally it worked. Unfortunately I won't be able to get a coverage report as a artifact.
       #- run: sudo apt update
       #- run: sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils cpu-checker
       #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
