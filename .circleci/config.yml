@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@0.2.1
+  android: circleci/android@1.0.0
 
 commands:
   restore_caches:
@@ -77,7 +77,15 @@ commands:
 
   debug_test:
     steps:
-      - run: ./gradlew lintDebug testDebugUnitTest
+      # TODO: Fix emulator for code coverage
+      #- run: sudo apt update
+      #- run: sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils cpu-checker
+      #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
+      #- run: kvm-ok
+      #- android/start-emulator-and-run-tests:
+      #    post-emulator-launch-assemble-command: ''
+      #    test-command: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest testDebugUnitTestCoverage
+      - run: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest
       - store_artifacts_test_reports
       - save_gradle_build_caches
 
@@ -87,7 +95,15 @@ commands:
 
   release_test:
     steps:
-      - run: ./gradlew lintRelease testReleaseUnitTest
+      # TODO: Fix emulator for code coverage
+      #- run: sudo apt update
+      #- run: sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils cpu-checker
+      #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
+      #- run: kvm-ok
+      #- android/start-emulator-and-run-tests:
+      #    post-emulator-launch-assemble-command: ''
+      #    test-command: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest testReleaseUnitTestCoverage
+      - run: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest
       - store_artifacts_test_reports
       - save_gradle_build_caches
 
