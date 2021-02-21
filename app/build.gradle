@@ -13,10 +13,12 @@ plugins {
 
 apply from: '../jacoco.gradle'
 
-
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+def CONFIG = { k -> "\"${project.properties.get(k)}\"" }
+def BASE_API_URL = "BASE_API_URL"
 
 android {
     compileSdkVersion 30
@@ -68,6 +70,8 @@ android {
             debuggable true
             testCoverageEnabled true
             minifyEnabled false
+
+            buildConfigField "String", BASE_API_URL, CONFIG("api.server.url.development")
         }
 
         release {
@@ -76,6 +80,8 @@ android {
             testCoverageEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", BASE_API_URL, CONFIG("api.server.url.production")
         }
     }
 
