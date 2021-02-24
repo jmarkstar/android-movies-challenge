@@ -19,8 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-/** I'm only using 1 module for the whole app because it's only a demo.
- * */
 @Module
 @InstallIn(ApplicationComponent::class)
 class NetworkModule {
@@ -42,13 +40,12 @@ class NetworkModule {
         )
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        val httpClientBuilder = OkHttpClient().newBuilder()
-        httpClientBuilder.connectTimeout(Constants.HTTP_TIMEOUT, TimeUnit.MILLISECONDS)
-        httpClientBuilder.readTimeout(Constants.HTTP_TIMEOUT, TimeUnit.MILLISECONDS)
-        httpClientBuilder.writeTimeout(Constants.HTTP_TIMEOUT, TimeUnit.MILLISECONDS)
-        httpClientBuilder.addInterceptor(httpLoggingInterceptor)
-
-        return httpClientBuilder.build()
+        return OkHttpClient().newBuilder()
+            .connectTimeout(Constants.HTTP_TIMEOUT, TimeUnit.MILLISECONDS)
+            .readTimeout(Constants.HTTP_TIMEOUT, TimeUnit.MILLISECONDS)
+            .writeTimeout(Constants.HTTP_TIMEOUT, TimeUnit.MILLISECONDS)
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
     }
 
     @Provides
