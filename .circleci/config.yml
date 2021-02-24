@@ -77,18 +77,9 @@ commands:
 
   debug_test:
     steps:
-      # TODO: Fix emulator for code coverage:
-      # TODO: I found out the issue with circle ci and android emulators. Well, I'm only using the free version
-      # TODO: of circle ci and it provides only a medium size linux vm and it doesn't support virtualization. I noticed it
-      # TODO: when I tried the same script in a demo project in a paid circle ci account and tried the pipeline in a large and xlarge size vm
-      # TODO: and finally it worked. Unfortunately I won't be able to get a coverage report as a artifact.
-      #- run: sudo apt update
-      #- run: sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils cpu-checker
-      #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
-      #- run: kvm-ok
-      #- android/start-emulator-and-run-tests:
-      #    post-emulator-launch-assemble-command: ''
-      #    test-command: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest testDebugUnitTestCoverage
+      - android/start-emulator-and-run-tests:
+          post-emulator-launch-assemble-command: ''
+          test-command: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest testDebugUnitTestCoverage
       - run: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest
       - store_artifacts_test_reports
       - save_gradle_build_caches
@@ -99,14 +90,9 @@ commands:
 
   release_test:
     steps:
-      # TODO: Fix emulator for code coverage
-      #- run: sudo apt update
-      #- run: sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils cpu-checker
-      #- run: egrep -c '(vmx|svm)' /proc/cpuinfo
-      #- run: kvm-ok
-      #- android/start-emulator-and-run-tests:
-      #    post-emulator-launch-assemble-command: ''
-      #    test-command: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest testReleaseUnitTestCoverage
+      - android/start-emulator-and-run-tests:
+          post-emulator-launch-assemble-command: ''
+          test-command: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest testReleaseUnitTestCoverage
       - run: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest
       - store_artifacts_test_reports
       - save_gradle_build_caches
@@ -125,7 +111,9 @@ commands:
 jobs:
 
   build_debug:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
@@ -134,7 +122,9 @@ jobs:
       - save_gradle_build_caches
 
   test_debug:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
@@ -142,7 +132,9 @@ jobs:
       - debug_test
 
   build_test_debug:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
@@ -151,7 +143,9 @@ jobs:
       - debug_test
 
   build_test_release:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
@@ -159,7 +153,9 @@ jobs:
       - release_test
 
   generate_apk:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
