@@ -1,6 +1,7 @@
 *.iml
 .gradle
 /local.properties
+/enigma-backup
 /.idea
 .DS_Store
 /build

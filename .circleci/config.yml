@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@0.2.1
+  android: circleci/android@1.0.0
 
 commands:
   restore_caches:
@@ -77,7 +77,10 @@ commands:
 
   debug_test:
     steps:
-      - run: ./gradlew lintDebug testDebugUnitTest
+      - android/start-emulator-and-run-tests:
+          post-emulator-launch-assemble-command: ''
+          test-command: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest testDebugUnitTestCoverage
+      - run: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest
       - store_artifacts_test_reports
       - save_gradle_build_caches
 
@@ -87,7 +90,10 @@ commands:
 
   release_test:
     steps:
-      - run: ./gradlew lintRelease testReleaseUnitTest
+      - android/start-emulator-and-run-tests:
+          post-emulator-launch-assemble-command: ''
+          test-command: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest testReleaseUnitTestCoverage
+      - run: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest
       - store_artifacts_test_reports
       - save_gradle_build_caches
 
@@ -105,7 +111,9 @@ commands:
 jobs:
 
   build_debug:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
@@ -114,7 +122,9 @@ jobs:
       - save_gradle_build_caches
 
   test_debug:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
@@ -122,7 +132,9 @@ jobs:
       - debug_test
 
   build_test_debug:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
@@ -131,23 +143,19 @@ jobs:
       - debug_test
 
   build_test_release:
-    executor: android/android
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
       - release_build
       - release_test
 
-  release_apk_firebase:
-    executor: android/android
-    steps:
-      - checkout
-      - restore_caches
-      - release_assemble
-      - store_release_apk
-
-  release_apk_google_play:
-    executor: android/android
+  generate_apk:
+    executor:
+      name: android/android-machine
+      resource-class: large
     steps:
       - checkout
       - restore_caches
@@ -188,7 +196,7 @@ workflows:
                 - /^release\/.*/
                 - master
 
-      - release_apk_firebase:
+      - generate_apk:
           requires:
             - build_test_release
             - build_test_debug
@@ -198,12 +206,4 @@ workflows:
               only:
                 - /^release\/.*/
                 - /^feature\/.*/
-
-      - release_apk_google_play:
-          requires:
-            - build_test_release
-
-          filters:
-            branches:
-              only:
                 - master
