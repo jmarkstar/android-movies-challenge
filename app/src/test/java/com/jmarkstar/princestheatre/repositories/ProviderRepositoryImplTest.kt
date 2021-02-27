@@ -79,7 +79,7 @@ class ProviderRepositoryImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies when server responses successfully`() = runBlocking {
+    fun `test get movies Repository when server responses successfully`() = runBlocking {
 
         // Given
         networkState.isConnected = true
@@ -112,7 +112,7 @@ class ProviderRepositoryImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies from local when there is not internet connection`() = runBlocking {
+    fun `test get movies Repository when there is not internet connection`() = runBlocking {
         // Given
         networkState.isConnected = false
         movieDao.insertAll(fakeMovies)
@@ -128,7 +128,7 @@ class ProviderRepositoryImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies when an server error occurs in one provider endpoint`() = runBlocking {
+    fun `test get movies Repository when an server error occurs in one provider endpoint`() = runBlocking {
 
         // Given
         networkState.isConnected = true
@@ -161,7 +161,7 @@ class ProviderRepositoryImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies when an server error occurs in all provider endpoints`() = runBlocking {
+    fun `test get movies Repository when an server error occurs in all provider endpoints`() = runBlocking {
 
         // Given
         networkState.isConnected = true
@@ -197,9 +197,8 @@ class ProviderRepositoryImplTest : BaseTest() {
         assertEquals("Bad Gateway", exception.message)
     }
 
-
     @Test
-    fun `test get movies when server responses not found success`() = runBlocking {
+    fun `test get movies Repository when server responses not found success`() = runBlocking {
 
         // Given
         networkState.isConnected = true
