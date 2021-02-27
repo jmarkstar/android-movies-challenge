@@ -1,16 +1,15 @@
-package com.jmarkstar.princestheatre.presentation
+package com.jmarkstar.princestheatre.presentation.movie_list
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.jmarkstar.princestheatre.R
-import com.jmarkstar.princestheatre.domain.repositories.ProviderRepository
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MovieListActivity : AppCompatActivity() {
 
-    @Inject lateinit var repository: ProviderRepository
+    private val movieListViewModel: MovieListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

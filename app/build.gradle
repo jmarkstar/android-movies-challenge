@@ -170,8 +170,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$livecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$livecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livecycle_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodel_version"
-    kapt "androidx.hilt:hilt-compiler:$hilt_viewmodel_version"
 
     // Network
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -193,6 +191,8 @@ dependencies {
     // DI - Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodel_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_viewmodel_version"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
