@@ -7,6 +7,7 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.google.gson.Gson
 import com.jmarkstar.princestheatre.common.Constants
 import com.jmarkstar.princestheatre.repositories.network.MoviesService
+import com.jmarkstar.princestheatre.repositories.network.interceptors.AddApiKeyInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,15 +37,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(
+        addApiKeyInterceptor: AddApiKeyInterceptor
+    ): OkHttpClient {
 
-        val httpLoggingInterceptor = HttpLoggingInterceptor(
-            object : HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    Timber.tag("OkHttp").i(message)
-                }
-            }
-        )
+        val httpLoggingInterceptor = HttpLoggingInterceptor { message ->
+            Timber.tag("OkHttp").i(message)
+        }
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         return OkHttpClient().newBuilder()
@@ -52,8 +51,13 @@ object NetworkModule {
             .readTimeout(Constants.HTTP_TIMEOUT, TimeUnit.MILLISECONDS)
             .writeTimeout(Constants.HTTP_TIMEOUT, TimeUnit.MILLISECONDS)
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(addApiKeyInterceptor)
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun provideApiKeyInterceptor() = AddApiKeyInterceptor()
 
     @Singleton
     @Provides

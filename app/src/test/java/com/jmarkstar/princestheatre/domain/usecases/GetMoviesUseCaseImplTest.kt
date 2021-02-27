@@ -2,7 +2,6 @@ package com.jmarkstar.princestheatre.domain.usecases
 
 import com.jmarkstar.princestheatre.common.BaseTest
 import com.jmarkstar.princestheatre.domain.ResultOf
-import com.jmarkstar.princestheatre.domain.models.MovieModel
 import com.jmarkstar.princestheatre.domain.repositories.ProviderRepository
 import com.jmarkstar.princestheatre.fakeMovies
 import com.jmarkstar.princestheatre.repositories.entities.toModels
@@ -26,7 +25,7 @@ class GetMoviesUseCaseImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies list successfully`() = runBlocking {
+    fun `test get movies Use Case when it's successfully`() = runBlocking {
 
         // Given
         val fakeMovieModels = fakeMovies.toModels().toSet().toList()
@@ -43,10 +42,10 @@ class GetMoviesUseCaseImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies when is empty list`() = runBlocking {
+    fun `test get movies Use Case when it's empty list`() = runBlocking {
 
         // Given
-        coEvery { providerRepository.getMovies() } returns ResultOf.Success(ArrayList<MovieModel>())
+        coEvery { providerRepository.getMovies() } returns ResultOf.Success(emptyList())
 
         // When
         val getMoviesUseCaseResult = getMoviesUseCase.invoke()
@@ -58,7 +57,7 @@ class GetMoviesUseCaseImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies when error happens`() = runBlocking {
+    fun `test get movies Use Case when error happens`() = runBlocking {
 
         // Given
         coEvery { providerRepository.getMovies() } returns ResultOf.Failure(Exception())

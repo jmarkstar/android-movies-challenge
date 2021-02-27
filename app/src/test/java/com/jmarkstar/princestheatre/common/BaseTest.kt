@@ -6,6 +6,7 @@ import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -19,17 +20,19 @@ import org.robolectric.annotation.Config
 @ExperimentalCoroutinesApi
 abstract class BaseTest {
 
-    val testMainDispatcher = TestCoroutineDispatcher()
+    val testDispatcher = TestCoroutineDispatcher()
+    val testScope = TestCoroutineScope(testDispatcher)
 
     @CallSuper
     @Before
     open fun setUp() {
-        Dispatchers.setMain(testMainDispatcher)
+        Dispatchers.setMain(testDispatcher)
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-        testMainDispatcher.cleanupTestCoroutines()
+        testDispatcher.cleanupTestCoroutines()
+        testScope.cleanupTestCoroutines()
     }
 }
