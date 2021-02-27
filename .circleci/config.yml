@@ -89,10 +89,15 @@ commands:
 
   debug_test:
     steps:
+      - run: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest
+      - store_artifacts_test_reports
+      - save_gradle_build_caches
+
+  debug_test_coverage:
+    steps:
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ''
           test-command: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest testDebugUnitTestCoverage
-      - run: ./gradlew lintDebug ktlintDebugCheck testDebugUnitTest
       - store_artifacts_test_reports
       - save_gradle_build_caches
 
@@ -105,7 +110,6 @@ commands:
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ''
           test-command: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest testReleaseUnitTestCoverage
-      - run: ./gradlew lintRelease ktlintReleaseCheck testReleaseUnitTest
       - store_artifacts_test_reports
       - save_gradle_build_caches
 
@@ -152,7 +156,7 @@ jobs:
       - restore_caches
       - clean
       - debug_build
-      - debug_test
+      - debug_test_coverage
 
   build_test_release:
     executor:
