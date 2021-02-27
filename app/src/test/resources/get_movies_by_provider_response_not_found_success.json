@@ -1,0 +1,6 @@
+{
+  "statusCode": 404,
+  "body": {
+    "message": "Not Found"
+  }
+}

@@ -1,33 +1,40 @@
-package com.jmarkstar.princestheatre.di
+package com.jmarkstar.princestheatre.repositories.di
 
 import android.content.Context
 import com.facebook.cache.disk.DiskCacheConfig
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory
 import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.google.gson.Gson
-import com.jmarkstar.princestheatre.BuildConfig
 import com.jmarkstar.princestheatre.common.Constants
+import com.jmarkstar.princestheatre.repositories.network.MoviesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-class NetworkModule {
+object NetworkModule {
 
-    // NETWORK
+    @Provides
+    fun provideMoviesService(
+        retrofit: Retrofit
+    ): MoviesService = retrofit.create(MoviesService::class.java)
 
+    @Singleton
     @Provides
     fun provideGson() = Gson()
 
+    @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
 
@@ -48,15 +55,26 @@ class NetworkModule {
             .build()
     }
 
+    @Singleton
     @Provides
-    fun provideRetrofitClient(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_API_URL)
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .client(okHttpClient)
-        .build()
+    fun provideRetrofitClient(
+        gson: Gson,
+        okHttpClient: OkHttpClient,
+        baseApiUrl: HttpUrl
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseApiUrl)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
+            .build()
+    }
 
+    @Singleton
     @Provides
-    fun provideImagePipelineConfig(@ApplicationContext context: Context, okHttpClient: OkHttpClient): ImagePipelineConfig {
+    fun provideImagePipelineConfig(
+        @ApplicationContext context: Context,
+        okHttpClient: OkHttpClient
+    ): ImagePipelineConfig {
 
         val diskCacheLowSizeBytes = (1024 * 1024 * 50).toLong() // 50 MB
         val diskCacheSizeBytes = (1024 * 1024 * 500).toLong() // 500 MB

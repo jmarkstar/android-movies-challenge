@@ -4,8 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.jmarkstar.princestheatre.repositories.local.daos.MovieDao
 import com.jmarkstar.princestheatre.repositories.local.daos.ProviderDao
-import com.jmarkstar.princestheatre.repositories.local.entities.Movie
-import com.jmarkstar.princestheatre.repositories.local.entities.Provider
+import com.jmarkstar.princestheatre.repositories.entities.Movie
+import com.jmarkstar.princestheatre.repositories.entities.Provider
 
 @Database(
     entities = [
