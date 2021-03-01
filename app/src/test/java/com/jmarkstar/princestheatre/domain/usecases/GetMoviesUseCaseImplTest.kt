@@ -10,6 +10,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
@@ -19,8 +20,8 @@ class GetMoviesUseCaseImplTest : BaseTest() {
 
     private lateinit var getMoviesUseCase: GetMoviesUseCase
 
-    override fun setUp() {
-        super.setUp()
+    @Before
+    fun setUp() {
         getMoviesUseCase = GetMoviesUseCaseImpl(providerRepository)
     }
 

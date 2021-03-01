@@ -6,12 +6,15 @@ import com.jmarkstar.princestheatre.repositories.local.MoviesDatabase
 import com.jmarkstar.princestheatre.repositories.local.PrepopulateCallback
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 
 @Module
-@InstallIn(SingletonComponent::class)
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [LocalModule::class]
+)
 object LocalModuleMock {
 
     @Provides

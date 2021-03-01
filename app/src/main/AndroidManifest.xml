@@ -12,9 +12,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Androidmovieschallenge">
+        android:theme="@style/Theme.AndroidMoviesChallenge">
 
-        <activity android:name=".presentation.movie_list.MovieListActivity">
+        <activity android:name=".presentation.MovieListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

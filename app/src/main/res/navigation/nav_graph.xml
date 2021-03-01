@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/movieListFragment">
+
+    <fragment
+        android:id="@+id/movieListFragment"
+        android:label="@string/movie_list_fragment_label"
+        android:name="com.jmarkstar.princestheatre.presentation.movie_list.MovieListFragment"
+        tools:layout="@layout/fragment_movie_list">
+
+        <action
+            android:id="@+id/action_List_to_Details"
+            app:destination="@id/movieDetailsFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:label="{title}"
+        android:name="com.jmarkstar.princestheatre.presentation.movie_details.MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details" >
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+    </fragment>
+
+</navigation>

@@ -4,18 +4,15 @@ import com.google.gson.Gson
 import com.jmarkstar.princestheatre.common.BaseTest
 import com.jmarkstar.princestheatre.common.UnitTestUtils
 import com.jmarkstar.princestheatre.common.util.NetworkState
-import com.jmarkstar.princestheatre.di.ApplicationModule
 import com.jmarkstar.princestheatre.domain.ResultOf
 import com.jmarkstar.princestheatre.domain.repositories.ProviderRepository
 import com.jmarkstar.princestheatre.fakeMovies
-import com.jmarkstar.princestheatre.repositories.di.LocalModule
 import com.jmarkstar.princestheatre.repositories.exceptions.NetworkException
 import com.jmarkstar.princestheatre.repositories.local.daos.MovieDao
 import com.jmarkstar.princestheatre.repositories.local.daos.ProviderDao
 import com.jmarkstar.princestheatre.repositories.network.MoviesService
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.Dispatcher
@@ -24,12 +21,12 @@ import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(LocalModule::class, ApplicationModule::class)
 @ExperimentalCoroutinesApi
 class ProviderRepositoryImplTest : BaseTest() {
 
@@ -55,8 +52,8 @@ class ProviderRepositoryImplTest : BaseTest() {
 
     private lateinit var providerRepository: ProviderRepository
 
-    override fun setUp() {
-        super.setUp()
+    @Before
+    fun setUp() {
         hiltRule.inject()
         mockWebServer.start(UnitTestUtils.MOCK_SERVER_PORT)
 

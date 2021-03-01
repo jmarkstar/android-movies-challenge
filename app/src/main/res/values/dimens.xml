@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="card_corner_radius">0dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+
+    <dimen name="movie_list_error_text_size">22sp</dimen>
+
+    <dimen name="progress_size">60dp</dimen>
+</resources>

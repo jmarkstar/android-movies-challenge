@@ -3,19 +3,16 @@ package com.jmarkstar.princestheatre.repositories.entities
 import com.google.gson.Gson
 import com.jmarkstar.princestheatre.common.BaseTest
 import com.jmarkstar.princestheatre.common.UnitTestUtils
-import com.jmarkstar.princestheatre.di.ApplicationModule
-import com.jmarkstar.princestheatre.repositories.di.LocalModule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 
 @HiltAndroidTest
-@UninstallModules(LocalModule::class, ApplicationModule::class)
 @ExperimentalCoroutinesApi
 class MovieTest : BaseTest() {
 
@@ -25,8 +22,8 @@ class MovieTest : BaseTest() {
     @Inject
     lateinit var gSon: Gson
 
-    override fun setUp() {
-        super.setUp()
+    @Before
+    fun setUp() {
         hiltRule.inject()
     }
 

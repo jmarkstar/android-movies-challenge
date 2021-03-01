@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">android-movies-challenge</string>
+    <string name="app_name">Movies Challenge</string>
+
+    <!-- transition -->
+    <string name="movie_transition_poster">moviePosterTransition</string>
+
+    <string name="movie_list_error_sample">Bad Gateway</string>
+    <string name="movie_list_fragment_label">Prince\'s Theatre</string>
+
 </resources>

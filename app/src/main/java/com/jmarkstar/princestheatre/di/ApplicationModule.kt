@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkRequest
 import com.jmarkstar.princestheatre.BuildConfig
+import com.jmarkstar.princestheatre.common.coroutines.CoroutineDispatcherProvider
+import com.jmarkstar.princestheatre.common.coroutines.DispatcherProvider
 import com.jmarkstar.princestheatre.common.util.NetworkCallbackImp
 import com.jmarkstar.princestheatre.common.util.NetworkState
 import com.jmarkstar.princestheatre.common.util.NetworkStateImp
@@ -39,4 +41,8 @@ object ApplicationModule {
         )
         return holder
     }
+
+    @Singleton
+    @Provides
+    fun provideDispatcherProvider(): DispatcherProvider = CoroutineDispatcherProvider()
 }
