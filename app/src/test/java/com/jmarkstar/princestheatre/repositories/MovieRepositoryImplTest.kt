@@ -1,7 +1,5 @@
 package com.jmarkstar.princestheatre.repositories
 
-import org.junit.Test
-
 class MovieRepositoryImplTest {
 /*
     @Test

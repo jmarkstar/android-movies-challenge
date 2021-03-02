@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidMoviesChallenge">
 
-        <activity android:name=".presentation.MovieListActivity">
+        <activity android:name=".presentation.MoviesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

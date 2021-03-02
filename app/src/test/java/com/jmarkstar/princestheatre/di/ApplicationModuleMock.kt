@@ -37,7 +37,7 @@ object ApplicationModuleMock {
     @Provides
     fun provideDispatcherProvider(
         coroutineTestRule: CoroutineTestRule
-    ): DispatcherProvider =   coroutineTestRule.testDispatcherProvider
+    ): DispatcherProvider = coroutineTestRule.testDispatcherProvider
 
     @ExperimentalCoroutinesApi
     @Singleton

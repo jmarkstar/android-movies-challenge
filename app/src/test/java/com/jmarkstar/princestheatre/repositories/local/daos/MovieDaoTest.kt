@@ -45,4 +45,3 @@ class MovieDaoTest : BaseTest() {
         assertEquals(0, movieDao.count())
     }
 }
-

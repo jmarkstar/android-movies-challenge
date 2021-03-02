@@ -10,7 +10,9 @@ import com.jmarkstar.princestheatre.fakeMovies
 import com.jmarkstar.princestheatre.presentation.common.Resource
 import com.jmarkstar.princestheatre.repositories.entities.toModels
 import com.jmarkstar.princestheatre.repositories.exceptions.NetworkException
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Before

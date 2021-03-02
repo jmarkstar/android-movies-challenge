@@ -24,7 +24,6 @@ class MovieListViewModel @Inject constructor(
     val movies = MutableLiveData<Resource<List<MovieModel>>>()
 
     fun loadMovies() = viewModelScope.launch(dispatcherProvider.IO) {
-        // movies.postValue(null)
         movies.postValue(Resource.Loading())
         val result = getMoviesUseCase.invoke()
         result.doIfSuccess {

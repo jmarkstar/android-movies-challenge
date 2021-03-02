@@ -1,13 +1,11 @@
 package com.jmarkstar.princestheatre.common
 
 import android.os.Build
-import dagger.hilt.android.testing.HiltTestApplication
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.jmarkstar.princestheatre.HiltTestApplication_Application
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@Config(sdk = [Build.VERSION_CODES.O_MR1], application = HiltTestApplication::class)
+@Config(sdk = [Build.VERSION_CODES.O_MR1], application = HiltTestApplication_Application::class)
 @RunWith(RobolectricTestRunner::class)
-@ExperimentalCoroutinesApi
 abstract class BaseTest

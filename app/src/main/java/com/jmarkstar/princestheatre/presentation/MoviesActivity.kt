@@ -7,7 +7,7 @@ import com.jmarkstar.princestheatre.presentation.common.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieListActivity : BaseActivity<ActivityMainBinding>() {
+class MoviesActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun layoutId() = R.layout.activity_main
 

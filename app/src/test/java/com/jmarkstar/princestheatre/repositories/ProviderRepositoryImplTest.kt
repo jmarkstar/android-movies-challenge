@@ -224,4 +224,3 @@ class ProviderRepositoryImplTest : BaseTest() {
         assert(resultOf is ResultOf.Failure)
     }
 }
-

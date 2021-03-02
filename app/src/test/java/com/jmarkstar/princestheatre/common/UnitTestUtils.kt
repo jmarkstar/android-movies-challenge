@@ -35,7 +35,8 @@ object UnitTestUtils {
     ) = MockResponse()
         .setResponseCode(httpCode)
         .addHeader("Content-Type", "application/json; charset=utf-8")
-        .setBody(if(jsonFileName != null) {
+        .setBody(
+            if (jsonFileName != null) {
                 readFileFromResources(jsonFileName)
             } else {
                 Constants.EMPTY

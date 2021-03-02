@@ -24,7 +24,7 @@ abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity() {
 
     open fun allowScreenshot() = false
 
-    open fun navHostFragment() = 0
+    abstract fun navHostFragment(): Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +38,21 @@ abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity() {
             )
         }
 
-        binding = DataBindingUtil.setContentView(this, layoutId())
+        if (layoutId() != 0) {
+            binding = DataBindingUtil.setContentView(this, layoutId())
+        }
 
-        if (navHostFragment() != 0) {
-            val navHostFragment =
-                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            navController = navHostFragment.navController
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(
+                if (navHostFragment() != 0) {
+                    navHostFragment()
+                } else {
+                    R.id.nav_host_fragment
+                }
+            )
+
+        navHostFragment?.apply {
+            navController = (navHostFragment as NavHostFragment).navController
         }
     }
 
