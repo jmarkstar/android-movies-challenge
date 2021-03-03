@@ -1,5 +1,6 @@
 package com.jmarkstar.princestheatre.presentation.movie_list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -21,16 +22,27 @@ class MovieListViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle? = null,
 ) : ViewModel() {
 
-    val movies = MutableLiveData<Resource<List<MovieModel>>>()
+    val movies: LiveData<Resource<List<MovieModel>>>
+        get() = _movies
 
-    fun loadMovies() = viewModelScope.launch(dispatcherProvider.IO) {
-        movies.postValue(Resource.Loading())
-        val result = getMoviesUseCase.invoke()
-        result.doIfSuccess {
-            movies.postValue(Resource.Success(it))
-        }
-        result.doIfFailure {
-            movies.postValue(Resource.Error(it?.message))
+    private val _movies = MutableLiveData<Resource<List<MovieModel>>>()
+
+    init {
+        loadMovies()
+    }
+
+    fun loadMovies() {
+        _movies.postValue(Resource.Loading())
+
+        viewModelScope.launch(dispatcherProvider.IO) {
+
+            val result = getMoviesUseCase.invoke()
+            result.doIfSuccess {
+                _movies.postValue(Resource.Success(it))
+            }
+            result.doIfFailure {
+                _movies.postValue(Resource.Error(it?.message))
+            }
         }
     }
 }

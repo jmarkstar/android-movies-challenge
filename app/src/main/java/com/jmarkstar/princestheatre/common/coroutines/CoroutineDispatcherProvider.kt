@@ -1,10 +1,10 @@
 package com.jmarkstar.princestheatre.common.coroutines
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
 
 class CoroutineDispatcherProvider : DispatcherProvider {
 
-    override val Main: CoroutineContext by lazy { Dispatchers.Main }
-    override val IO: CoroutineContext by lazy { Dispatchers.IO }
+    override val Main: CoroutineDispatcher by lazy { Dispatchers.Main }
+    override val IO: CoroutineDispatcher by lazy { Dispatchers.IO }
 }

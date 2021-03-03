@@ -8,7 +8,7 @@ import com.jmarkstar.princestheatre.repositories.entities.toModels
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +26,7 @@ class GetMoviesUseCaseImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies Use Case when it's successfully`() = runBlocking {
+    fun `test get movies Use Case when it's successfully`() = runBlockingTest {
 
         // Given
         val fakeMovieModels = fakeMovies.toModels().toSet().toList()
@@ -43,7 +43,7 @@ class GetMoviesUseCaseImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies Use Case when it's empty list`() = runBlocking {
+    fun `test get movies Use Case when it's empty list`() = runBlockingTest {
 
         // Given
         coEvery { providerRepository.getMovies() } returns ResultOf.Success(emptyList())
@@ -58,7 +58,7 @@ class GetMoviesUseCaseImplTest : BaseTest() {
     }
 
     @Test
-    fun `test get movies Use Case when error happens`() = runBlocking {
+    fun `test get movies Use Case when error happens`() = runBlockingTest {
 
         // Given
         coEvery { providerRepository.getMovies() } returns ResultOf.Failure(Exception())

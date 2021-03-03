@@ -1,6 +1,5 @@
 package com.jmarkstar.princestheatre.di
 
-import com.jmarkstar.princestheatre.common.CoroutineTestRule
 import com.jmarkstar.princestheatre.common.UnitTestUtils
 import com.jmarkstar.princestheatre.common.coroutines.DispatcherProvider
 import com.jmarkstar.princestheatre.common.util.NetworkState
@@ -9,7 +8,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import okhttp3.HttpUrl
 import javax.inject.Singleton
 
@@ -36,11 +37,10 @@ object ApplicationModuleMock {
     @Singleton
     @Provides
     fun provideDispatcherProvider(
-        coroutineTestRule: CoroutineTestRule
-    ): DispatcherProvider = coroutineTestRule.testDispatcherProvider
+        testCoroutineDispatcher: TestCoroutineDispatcher
+    ) = object : DispatcherProvider {
 
-    @ExperimentalCoroutinesApi
-    @Singleton
-    @Provides
-    fun provideCoroutineTestRule() = CoroutineTestRule()
+        override val Main: CoroutineDispatcher = testCoroutineDispatcher
+        override val IO: CoroutineDispatcher = testCoroutineDispatcher
+    }
 }

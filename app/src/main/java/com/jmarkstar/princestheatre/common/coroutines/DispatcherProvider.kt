@@ -1,8 +1,8 @@
 package com.jmarkstar.princestheatre.common.coroutines
 
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineDispatcher
 
 interface DispatcherProvider {
-    val Main: CoroutineContext
-    val IO: CoroutineContext
+    val Main: CoroutineDispatcher
+    val IO: CoroutineDispatcher
 }

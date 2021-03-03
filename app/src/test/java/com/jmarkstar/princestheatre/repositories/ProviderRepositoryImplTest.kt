@@ -15,10 +15,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -31,7 +28,7 @@ import javax.inject.Inject
 class ProviderRepositoryImplTest : BaseTest() {
 
     @get:Rule
-    var hiltRule = HiltAndroidRule(this)
+    val hiltRule = HiltAndroidRule(this)
 
     private val mockWebServer = MockWebServer()
 
@@ -80,23 +77,7 @@ class ProviderRepositoryImplTest : BaseTest() {
 
         // Given
         networkState.isConnected = true
-        mockWebServer.dispatcher = object : Dispatcher() {
-
-            override fun dispatch(
-                request: RecordedRequest
-            ): MockResponse {
-                return when (request.path) {
-                    "/api/cinemaworld/movies" ->
-                        UnitTestUtils.mockJsonResponse(200, "get_movies_cinema_world_response_success.json")
-
-                    "/api/filmworld/movies" ->
-                        UnitTestUtils.mockJsonResponse(200, "get_movies_film_world_response_success.json")
-
-                    else ->
-                        UnitTestUtils.mockJsonResponse(404, "get_movies_by_provider_response_not_found_success.json")
-                }
-            }
-        }
+        mockWebServer.dispatcher = MockServerDispatchers.providerAllSuccessResponses
 
         // When
         val resultOf = providerRepository.getMovies()
@@ -129,23 +110,7 @@ class ProviderRepositoryImplTest : BaseTest() {
 
         // Given
         networkState.isConnected = true
-        mockWebServer.dispatcher = object : Dispatcher() {
-
-            override fun dispatch(
-                request: RecordedRequest
-            ): MockResponse {
-                return when (request.path) {
-                    "/api/cinemaworld/movies" ->
-                        UnitTestUtils.mockJsonResponse(200, "get_movies_cinema_world_response_success.json")
-
-                    "/api/filmworld/movies" ->
-                        UnitTestUtils.mockJsonResponse(502, "get_movies_by_provider_response_502_failed.json")
-
-                    else ->
-                        UnitTestUtils.mockJsonResponse(404, "get_movies_by_provider_response_not_found_success.json")
-                }
-            }
-        }
+        mockWebServer.dispatcher = MockServerDispatchers.providerOneFailedResponse
 
         // When
         val resultOf = providerRepository.getMovies()
@@ -162,23 +127,7 @@ class ProviderRepositoryImplTest : BaseTest() {
 
         // Given
         networkState.isConnected = true
-        mockWebServer.dispatcher = object : Dispatcher() {
-
-            override fun dispatch(
-                request: RecordedRequest
-            ): MockResponse {
-                return when (request.path) {
-                    "/api/cinemaworld/movies" ->
-                        UnitTestUtils.mockJsonResponse(502, "get_movies_by_provider_response_502_failed.json")
-
-                    "/api/filmworld/movies" ->
-                        UnitTestUtils.mockJsonResponse(502, "get_movies_by_provider_response_502_failed.json")
-
-                    else ->
-                        UnitTestUtils.mockJsonResponse(404, "get_movies_by_provider_response_not_found_success.json")
-                }
-            }
-        }
+        mockWebServer.dispatcher = MockServerDispatchers.providerAllFailedResponses
 
         // When
         val resultOf = providerRepository.getMovies()
@@ -199,23 +148,7 @@ class ProviderRepositoryImplTest : BaseTest() {
 
         // Given
         networkState.isConnected = true
-        mockWebServer.dispatcher = object : Dispatcher() {
-
-            override fun dispatch(
-                request: RecordedRequest
-            ): MockResponse {
-                return when (request.path) {
-                    "/api/cinemaworld/movies" ->
-                        UnitTestUtils.mockJsonResponse(200, "get_movies_by_provider_response_not_found_success.json")
-
-                    "/api/filmworld/movies" ->
-                        UnitTestUtils.mockJsonResponse(200, "get_movies_by_provider_response_not_found_success.json")
-
-                    else ->
-                        UnitTestUtils.mockJsonResponse(404)
-                }
-            }
-        }
+        mockWebServer.dispatcher = MockServerDispatchers.providerAllNotFoundResponses
 
         // When
         val resultOf = providerRepository.getMovies()

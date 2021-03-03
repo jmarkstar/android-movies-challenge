@@ -19,12 +19,12 @@
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:label="{title}"
+        android:label="{selectedMovieName}"
         android:name="com.jmarkstar.princestheatre.presentation.movie_details.MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details" >
 
         <argument
-            android:name="title"
+            android:name="selectedMovieName"
             app:argType="string" />
 
     </fragment>

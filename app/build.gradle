@@ -179,14 +179,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:okhttp:$ok_http_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_version"
-    implementation("com.facebook.fresco:fresco:$fresco_version") {
-        exclude group: 'com.facebook.soloader', module: 'soloader'
-        exclude group: 'com.facebook.fresco', module: 'soloader'
-        exclude group: 'com.facebook.fresco', module: 'nativeimagefilters'
-        exclude group: 'com.facebook.fresco', module: 'nativeimagetranscoder'
-        exclude group: 'com.facebook.fresco', module: 'memory-type-native'
-        exclude group: 'com.facebook.fresco', module: 'imagepipeline-native'
-    }
+    implementation("com.facebook.fresco:fresco:$fresco_version")
     implementation "com.facebook.fresco:imagepipeline-okhttp3:$fresco_imagepipeline_okhttp3_version"
 
     // Database
@@ -221,6 +214,7 @@ dependencies {
 
     // Test
     testImplementation "junit:junit:$junit_version"
+    testImplementation "com.google.truth:truth:$google_truth"
     testImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     testImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
     testImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
@@ -235,7 +229,7 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
     testImplementation "androidx.navigation:navigation-testing:$nav_component_version"
-    // testImplementation "com.facebook.fresco:fresco:$fresco_version"
+    testImplementation "com.jakewharton.espresso:okhttp3-idling-resource:1.0.0"
 
     // Android Test
     androidTestImplementation "junit:junit:$junit_version"

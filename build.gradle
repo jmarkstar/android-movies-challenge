@@ -23,6 +23,7 @@ buildscript {
         //test
         jacoco_version = '0.8.5'
         junit_version = "4.13.2"
+        google_truth = "1.1.2"
         android_junit_ext_version = "1.1.2"
         mockk_version = "1.10.0"
         robolectric_version = "4.5"

@@ -3,6 +3,7 @@ package com.jmarkstar.princestheatre.presentation.movie_list
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.jmarkstar.princestheatre.R
 import com.jmarkstar.princestheatre.databinding.FragmentMovieListBinding
@@ -31,7 +32,9 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         movieAdapter.onItemClick = {
-            // TODO: will be implemented
+            findNavController().navigate(
+                MovieListFragmentDirections.actionListToDetails(it.title)
+            )
         }
 
         binding.apply {
@@ -59,8 +62,6 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>() {
                 }
             }
         }
-
-        movieListViewModel.loadMovies()
     }
 
     private fun processLoading() = binding.apply {

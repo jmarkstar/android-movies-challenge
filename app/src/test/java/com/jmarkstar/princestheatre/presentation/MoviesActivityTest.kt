@@ -1,7 +1,7 @@
 package com.jmarkstar.princestheatre.presentation
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.jmarkstar.princestheatre.common.BaseUITest
+import com.jmarkstar.princestheatre.common.BaseTest
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
@@ -11,7 +11,7 @@ import org.junit.Test
 import org.junit.Assert.assertNotNull
 
 @HiltAndroidTest
-class MoviesActivityTest : BaseUITest() {
+class MoviesActivityTest : BaseTest() {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)

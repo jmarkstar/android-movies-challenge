@@ -36,9 +36,7 @@ class MovieDaoTest : BaseTest() {
 
         assertEquals(6, movieDao.count())
 
-        val movies = movieDao.getAll()
-
-        assert(fakeMovies.containsAll(movies))
+        assert(fakeMovies.containsAll(movieDao.getAll()))
 
         movieDao.deleteAll()
 
